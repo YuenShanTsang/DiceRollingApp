@@ -11,12 +11,15 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.dicerollingapp.databinding.ActivityMainBinding
+import android.content.SharedPreferences
 import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     // Declare view binding
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var sharedPrefs: SharedPreferences
 
     // Declare list to hold spinner items
     private val sidesList = mutableListOf<String>()
@@ -36,6 +39,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         sidesList.add("12")
         sidesList.add("20")
 
+        sharedPrefs = getPreferences(Context.MODE_PRIVATE)
+
+        // Add button click listener to add user input to spinner
         // Add button click listener to add user input to spinner
         binding.sendButton.setOnClickListener {
             val input = binding.inputEditText.text.toString()
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     sidesList.add(input)
                     val gson = Gson()
                     val json = gson.toJson(sidesList)
-                    val editor = getSharedPreferences("myPrefs", Context.MODE_PRIVATE).edit()
+                    val editor = sharedPrefs.edit()
                     editor.putString("sidesList", json)
                     editor.apply()
                     binding.inputEditText.text.clear()
@@ -60,8 +66,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
         }
 
-
-        // Initialize spinner adapter with default items
+       // Initialize spinner adapter with saved items
+        val gson = Gson()
+        val json = sharedPrefs.getString("sidesList", "")
+        val savedSidesList = gson.fromJson(json, Array<String>::class.java)
+        if (savedSidesList != null) {
+            sidesList.clear()
+            sidesList.addAll(savedSidesList.toList())
+        }
+        // Update spinner adapter with current items in sidesList
         updateSpinnerAdapter()
 
         // Add button click listener to roll the die and display result in TextView
@@ -91,6 +104,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
     }
+
 
     // Update spinner adapter with current items in sidesList
     private fun updateSpinnerAdapter() {
