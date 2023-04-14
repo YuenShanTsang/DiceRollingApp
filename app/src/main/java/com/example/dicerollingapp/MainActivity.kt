@@ -45,6 +45,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         // Initialize spinner adapter with default items
         updateSpinnerAdapter()
+
+        // Add button click listener to roll the die and display result in TextView
+        binding.roll1Button.setOnClickListener {
+            val selectedItem = binding.sidesSpinner.selectedItem.toString()
+            val maxVal = selectedItem.toInt()
+            val randomVal = ((Math.random() * maxVal) + 1).toInt()
+            binding.output1TextView.text = randomVal.toString()
+        }
     }
 
     // Update spinner adapter with current items in sidesList
@@ -56,7 +64,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     // Handle spinner item selection
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedItem = parent?.getItemAtPosition(position).toString()
+        parent?.getItemAtPosition(position).toString()
         // Do something with the selected item
     }
 
