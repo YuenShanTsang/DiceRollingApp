@@ -1,18 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<!--Divide the screen into upper(input and selection) and lower(outputs) parts-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:weightSum="3">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--Upper part: User input value and selection of dice-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--Title: Custom sided die-->
+        <TextView
+            android:id="@+id/customSided_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="start"
+            android:text="@string/customSided_text"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <!--Edit text: Take user input the number of sides-->
+        <EditText
+            android:id="@+id/input_edit_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="30dp"
+            android:padding="10dp"
+            android:minHeight="48dp"
+            android:ems="15"
+            android:textSize="18sp"
+            android:hint="@string/input_editText"
+            android:inputType="number"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor,VisualLintTextFieldSize" />
+
+        <!--Send button-->
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:gravity="center"
+            android:text="@string/send_button"
+            android:textSize="20sp"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:drawableEnd="@drawable/send_icon"
+            tools:ignore="VisualLintButtonSize" />
+
+        <!--Title: Select Dice-->
+        <TextView
+            android:id="@+id/selectDice_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/selectDice_text"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!--Select unit-->
+        <Spinner
+            android:id="@+id/sides_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="48dp"
+            android:contentDescription="@string/sides_spinner"/>
+
+        <!--Roll 1 button-->
+        <Button
+            android:id="@+id/roll1_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/roll1_button"
+            android:textSize="20sp"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:drawableEnd="@drawable/roll_icon"
+            tools:ignore="VisualLintButtonSize" />
+
+        <!--Roll two dice switch-->
+        <Switch
+            android:id="@+id/two_dice_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:minHeight="48dp"
+            android:switchMinWidth="50dp"
+            android:text="@string/twoDice_switch"
+            android:textSize="20sp"
+            android:textColor="@color/material_dynamic_neutral40"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <!--Roll 2 button-->
+        <Button
+            android:id="@+id/roll2_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="105dp"
+            android:layout_marginRight="105dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/roll2_button"
+            android:textSize="20sp"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:drawableEnd="@drawable/roll_icon"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+    <!--Lower part: Display results-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <!--Lower left part-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <!--Title: Result 1-->
+            <TextView
+                android:id="@+id/result1_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/result1_text"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <!--Output 1 value-->
+            <TextView
+                android:id="@+id/output1_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/output1_text"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <!--Lower right part-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!--Title: Result 2-->
+            <TextView
+                android:id="@+id/result2_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/result2_text"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <!--Output 1 value-->
+            <TextView
+                android:id="@+id/output2_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/output2_text"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

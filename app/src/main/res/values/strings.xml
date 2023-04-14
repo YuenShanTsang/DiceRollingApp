@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Dice Rolling App</string>
     <string name="night_text">Night Mode</string>
+    <string name="customSided_text">Custom-sided die:</string>
+    <string name="input_editText">Input number of sides</string>
+    <string name="send_button">Send</string>
+    <string name="selectDice_text">Select Dice</string>
+    <string name="sides_spinner">Sides of dice</string>
+    <string name="roll1_button">Roll</string>
+    <string name="roll2_button">Roll Two</string>
+    <string name="twoDice_switch">Roll two dice</string>
+    <string name="result1_text">Result 1:</string>
+    <string name="output1_text">0</string>
+    <string name="result2_text">Result 2:</string>
+    <string name="output2_text">0</string>
 </resources>
