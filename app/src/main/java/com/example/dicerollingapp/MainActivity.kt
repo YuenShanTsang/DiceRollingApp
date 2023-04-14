@@ -52,7 +52,26 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val maxVal = selectedItem.toInt()
             val randomVal = ((Math.random() * maxVal) + 1).toInt()
             binding.output1TextView.text = randomVal.toString()
+            binding.output2TextView.text = ""
         }
+
+        binding.roll2Button.isEnabled = false
+        binding.twoDiceSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.roll2Button.isEnabled = isChecked
+        }
+
+        // Add button click listener to roll two dice and display two results in TextView
+        binding.roll2Button.setOnClickListener {
+            if (binding.twoDiceSwitch.isChecked) {
+                val selectedItem = binding.sidesSpinner.selectedItem.toString()
+                val maxVal = selectedItem.toInt()
+                val randomVal1 = ((Math.random() * maxVal) + 1).toInt()
+                val randomVal2 = ((Math.random() * maxVal) + 1).toInt()
+                binding.output1TextView.text = randomVal1.toString()
+                binding.output2TextView.text = randomVal2.toString()
+            }
+        }
+
     }
 
     // Update spinner adapter with current items in sidesList
