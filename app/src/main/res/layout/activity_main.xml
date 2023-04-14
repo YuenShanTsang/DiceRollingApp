@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="3">
+    android:weightSum="5">
 
     <!--Upper part: User input value and selection of dice-->
     <LinearLayout
@@ -82,6 +82,8 @@
             android:minHeight="48dp"
             android:contentDescription="@string/sides_spinner"/>
 
+
+
         <!--Roll 1 button-->
         <Button
             android:id="@+id/roll1_button"
@@ -110,6 +112,14 @@
             android:textColor="@color/material_dynamic_neutral40"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+        <!--Dice image-->
+        <ImageView
+            android:id="@+id/pizza_image_view"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/dice_image"
+            android:src="@drawable/dice" />
+
         <!--Roll 2 button-->
         <Button
             android:id="@+id/roll2_button"
@@ -131,7 +141,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="2">

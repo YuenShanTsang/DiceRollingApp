@@ -3,22 +3,66 @@ package com.example.dicerollingapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.dicerollingapp.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    // Init view binding
+    // Declare view binding
     private lateinit var binding: ActivityMainBinding
+
+    // Declare list to hold spinner items
+    private val sidesList = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        // Setup view binding
+        // Inflate view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Add default spinner items
+        sidesList.add("4")
+        sidesList.add("6")
+        sidesList.add("8")
+        sidesList.add("10")
+        sidesList.add("12")
+        sidesList.add("20")
+
+        // Add button click listener to add user input to spinner
+        binding.sendButton.setOnClickListener {
+            val input = binding.inputEditText.text.toString()
+            if (input.isNotEmpty()) {
+                sidesList.add(input)
+                binding.inputEditText.text.clear()
+                updateSpinnerAdapter()
+            }
+        }
+
+        // Initialize spinner adapter with default items
+        updateSpinnerAdapter()
+    }
+
+    // Update spinner adapter with current items in sidesList
+    private fun updateSpinnerAdapter() {
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sidesList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.sidesSpinner.adapter = adapter
+    }
+
+    // Handle spinner item selection
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val selectedItem = parent?.getItemAtPosition(position).toString()
+        // Do something with the selected item
+    }
+
+    // Handle no item selected in spinner
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Handle nothing selected
     }
 
     // Add night switch in menu of the action bar
@@ -38,7 +82,4 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
-
-
-
 }

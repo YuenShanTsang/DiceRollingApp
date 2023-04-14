@@ -9,6 +9,7 @@
     <string name="roll1_button">Roll</string>
     <string name="roll2_button">Roll Two</string>
     <string name="twoDice_switch">Roll two dice</string>
+    <string name="dice_image">Rolling dice</string>
     <string name="result1_text">Result 1:</string>
     <string name="output1_text">0</string>
     <string name="result2_text">Result 2:</string>
