@@ -1,5 +1,6 @@
 package com.example.dicerollingapp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -7,8 +8,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Switch
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.dicerollingapp.databinding.ActivityMainBinding
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -37,11 +40,26 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.sendButton.setOnClickListener {
             val input = binding.inputEditText.text.toString()
             if (input.isNotEmpty()) {
-                sidesList.add(input)
-                binding.inputEditText.text.clear()
-                updateSpinnerAdapter()
+                val intValue = input.toIntOrNull()
+                if (intValue != null && intValue > 0) {
+                    sidesList.add(input)
+                    val gson = Gson()
+                    val json = gson.toJson(sidesList)
+                    val editor = getSharedPreferences("myPrefs", Context.MODE_PRIVATE).edit()
+                    editor.putString("sidesList", json)
+                    editor.apply()
+                    binding.inputEditText.text.clear()
+                    updateSpinnerAdapter()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Please enter a valid number greater than zero.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
+
 
         // Initialize spinner adapter with default items
         updateSpinnerAdapter()
