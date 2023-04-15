@@ -81,6 +81,7 @@
             android:minHeight="48dp"
             android:contentDescription="@string/sides_spinner"/>
 
+        <!--Ten sided die checkbox-->
         <CheckBox
             android:id="@+id/ten_sided_die_checkbox"
             android:layout_width="wrap_content"

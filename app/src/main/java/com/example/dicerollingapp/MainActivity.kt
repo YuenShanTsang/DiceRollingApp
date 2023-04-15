@@ -97,20 +97,27 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // Update spinner adapter with current items in sidesList
         updateSpinnerAdapter()
 
-        // Add button click listener to roll the die and display result in TextView
+        // Add roll button 1 click listener to roll the die
         binding.roll1Button.setOnClickListener {
+            // Get the selected item from the spinner
             val selectedItem = binding.sidesSpinner.selectedItem.toString()
             val maxVal = selectedItem.toInt()
+           // Generate random numbers
             val randomVal = if (binding.tenSidedDieCheckbox.isChecked) {
+                // For 10 sided die
                 ((Math.random() * maxVal) + 1).toInt() * 10
             } else {
                 ((Math.random() * maxVal) + 1).toInt()
             }
+            // Display the random value in the result 1 output TextView
             binding.output1TextView.text = randomVal.toString()
+            // Clear the result 2 output TextView
             binding.output2TextView.text = ""
         }
 
+        // Disable the roll two dice button by default
         binding.roll2Button.isEnabled = false
+        // If the switch is checked, enable the roll2Button
         binding.twoDiceSwitch.setOnCheckedChangeListener { _, isChecked ->
             binding.roll2Button.isEnabled = isChecked
         }
@@ -130,6 +137,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 } else {
                     ((Math.random() * maxVal) + 1).toInt()
                 }
+                // Display the random value in two output TextView
                 binding.output1TextView.text = randomVal1.toString()
                 binding.output2TextView.text = randomVal2.toString()
             }
@@ -138,8 +146,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     // Update spinner adapter with current items in sidesList
     private fun updateSpinnerAdapter() {
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sidesList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(this, R.layout.spinner_style, sidesList)
+        adapter.setDropDownViewResource(R.layout.dropdown_style)
         binding.sidesSpinner.adapter = adapter
     }
 
