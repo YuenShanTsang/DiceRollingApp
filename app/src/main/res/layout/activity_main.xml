@@ -34,7 +34,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:layout_marginBottom="30dp"
             android:padding="10dp"
             android:minHeight="48dp"
             android:ems="15"
@@ -65,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/selectDice_text"
             android:textSize="25sp"
@@ -78,11 +77,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="110dp"
             android:layout_marginEnd="110dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:minHeight="48dp"
             android:contentDescription="@string/sides_spinner"/>
 
-
+        <CheckBox
+            android:id="@+id/ten_sided_die_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tenSidedDie_text"
+            android:layout_marginTop="5dp"
+            android:checked="false"/>
 
         <!--Roll 1 button-->
         <Button
@@ -104,7 +109,7 @@
             android:id="@+id/two_dice_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:minHeight="48dp"
             android:switchMinWidth="50dp"
             android:text="@string/twoDice_switch"
@@ -127,7 +132,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="105dp"
             android:layout_marginRight="105dp"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/roll2_button"
             android:textSize="20sp"

@@ -19,10 +19,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     // Declare view binding
     private lateinit var binding: ActivityMainBinding
 
+    // Declare share preferences
     private lateinit var sharedPrefs: SharedPreferences
 
     // Declare list to hold spinner items
     private val sidesList = mutableListOf<String>()
+
+    // Declare preferences key
+    private val preferences = "MySidesList"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,24 +43,35 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         sidesList.add("12")
         sidesList.add("20")
 
+        // Initialize the shared preferences object with the mode set to private
         sharedPrefs = getPreferences(Context.MODE_PRIVATE)
 
-        // Add button click listener to add user input to spinner
-        // Add button click listener to add user input to spinner
+        // Send button click listener to add user input to spinner
         binding.sendButton.setOnClickListener {
+            // Retrieve the text input from the inputEditText view and converts it to a string
             val input = binding.inputEditText.text.toString()
             if (input.isNotEmpty()) {
+                // Convert the string input to an integer
                 val intValue = input.toIntOrNull()
+                // Add to the sidesList if it is a valid integer greater than 0
                 if (intValue != null && intValue > 0) {
                     sidesList.add(input)
+                    // Google Json
                     val gson = Gson()
-                    val json = gson.toJson(sidesList)
+                    // Save the updated list to shared preferences as a JSON string
+                    val sideJson = gson.toJson(sidesList)
+                    // Get an editor object for modifying the shared preferences
                     val editor = sharedPrefs.edit()
-                    editor.putString("sidesList", json)
+                    // Put the string into the shared preferences using the key
+                    editor.putString(preferences, sideJson)
+                    // Apply the changes made to the editor object to the shared preferences
                     editor.apply()
+                    // Clear the inputEditText view
                     binding.inputEditText.text.clear()
+                    // Update the spinner adapter
                     updateSpinnerAdapter()
                 } else {
+                    // If not, show a toast message to the user
                     Toast.makeText(
                         this,
                         "Please enter a valid number greater than zero.",
@@ -66,14 +81,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
         }
 
-       // Initialize spinner adapter with saved items
+        // Initialize spinner adapter with saved items
         val gson = Gson()
-        val json = sharedPrefs.getString("sidesList", "")
+        val json = sharedPrefs.getString(preferences, "")
+        // Convert the string to an array of Strings using the Gson object
         val savedSidesList = gson.fromJson(json, Array<String>::class.java)
+        // Check if the saved list is not null
         if (savedSidesList != null) {
+            // Clear the current sidesList
             sidesList.clear()
+            // Add all the saved sides to the current sidesList
             sidesList.addAll(savedSidesList.toList())
         }
+
         // Update spinner adapter with current items in sidesList
         updateSpinnerAdapter()
 
@@ -81,7 +101,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.roll1Button.setOnClickListener {
             val selectedItem = binding.sidesSpinner.selectedItem.toString()
             val maxVal = selectedItem.toInt()
-            val randomVal = ((Math.random() * maxVal) + 1).toInt()
+            val randomVal = if (binding.tenSidedDieCheckbox.isChecked) {
+                ((Math.random() * maxVal) + 1).toInt() * 10
+            } else {
+                ((Math.random() * maxVal) + 1).toInt()
+            }
             binding.output1TextView.text = randomVal.toString()
             binding.output2TextView.text = ""
         }
@@ -96,15 +120,21 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             if (binding.twoDiceSwitch.isChecked) {
                 val selectedItem = binding.sidesSpinner.selectedItem.toString()
                 val maxVal = selectedItem.toInt()
-                val randomVal1 = ((Math.random() * maxVal) + 1).toInt()
-                val randomVal2 = ((Math.random() * maxVal) + 1).toInt()
+                val randomVal1 = if (binding.tenSidedDieCheckbox.isChecked) {
+                    ((Math.random() * maxVal) + 1).toInt() * 10
+                } else {
+                    ((Math.random() * maxVal) + 1).toInt()
+                }
+                val randomVal2 = if (binding.tenSidedDieCheckbox.isChecked) {
+                    ((Math.random() * maxVal) + 1).toInt() * 10
+                } else {
+                    ((Math.random() * maxVal) + 1).toInt()
+                }
                 binding.output1TextView.text = randomVal1.toString()
                 binding.output2TextView.text = randomVal2.toString()
             }
         }
-
     }
-
 
     // Update spinner adapter with current items in sidesList
     private fun updateSpinnerAdapter() {
